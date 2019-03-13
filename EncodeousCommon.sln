@@ -1,0 +1,55 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio 15
+VisualStudioVersion = 15.0.28307.168
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Input", "Input", "{05B8BA4F-C075-4238-ADD3-B636B35CF60A}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Sys", "Sys", "{659AC10D-62D5-4038-B2DB-9B052A6C52E7}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "EncodeousCommon.Input.Keyboard.KeyboardHook", "EncodeousCommon.Input.Keyboard.KeyboardHook\EncodeousCommon.Input.Keyboard.KeyboardHook.csproj", "{B3974662-E582-450F-BFBD-A87F04877024}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "EncodeousCommon.Sys.Windows", "EncodeousCommon.Sys.Windows\EncodeousCommon.Sys.Windows.csproj", "{1C48817C-3C80-4D0D-95BC-FEACB3BA358A}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "EncodeousCommon.Sys.Graphics", "EncodeousCommon.Sys.Graphics\EncodeousCommon.Sys.Graphics.csproj", "{62B5E4F6-4E9C-443B-8ECD-739FC4CC43AC}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Miscellaneous", "Miscellaneous", "{01560084-35D8-4465-93CC-093F57FDEDDB}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "EncodeousCommon.Miscellaneous.ModalDialog", "EncodeousCommon.Miscellaneous.ModalDialog\EncodeousCommon.Miscellaneous.ModalDialog.csproj", "{CDAA9FFB-0CF8-47D4-88B8-D75B732C25CB}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{B3974662-E582-450F-BFBD-A87F04877024}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{B3974662-E582-450F-BFBD-A87F04877024}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{B3974662-E582-450F-BFBD-A87F04877024}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{B3974662-E582-450F-BFBD-A87F04877024}.Release|Any CPU.Build.0 = Release|Any CPU
+		{1C48817C-3C80-4D0D-95BC-FEACB3BA358A}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{1C48817C-3C80-4D0D-95BC-FEACB3BA358A}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{1C48817C-3C80-4D0D-95BC-FEACB3BA358A}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{1C48817C-3C80-4D0D-95BC-FEACB3BA358A}.Release|Any CPU.Build.0 = Release|Any CPU
+		{62B5E4F6-4E9C-443B-8ECD-739FC4CC43AC}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{62B5E4F6-4E9C-443B-8ECD-739FC4CC43AC}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{62B5E4F6-4E9C-443B-8ECD-739FC4CC43AC}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{62B5E4F6-4E9C-443B-8ECD-739FC4CC43AC}.Release|Any CPU.Build.0 = Release|Any CPU
+		{CDAA9FFB-0CF8-47D4-88B8-D75B732C25CB}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{CDAA9FFB-0CF8-47D4-88B8-D75B732C25CB}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{CDAA9FFB-0CF8-47D4-88B8-D75B732C25CB}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{CDAA9FFB-0CF8-47D4-88B8-D75B732C25CB}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(NestedProjects) = preSolution
+		{B3974662-E582-450F-BFBD-A87F04877024} = {05B8BA4F-C075-4238-ADD3-B636B35CF60A}
+		{1C48817C-3C80-4D0D-95BC-FEACB3BA358A} = {659AC10D-62D5-4038-B2DB-9B052A6C52E7}
+		{62B5E4F6-4E9C-443B-8ECD-739FC4CC43AC} = {659AC10D-62D5-4038-B2DB-9B052A6C52E7}
+		{CDAA9FFB-0CF8-47D4-88B8-D75B732C25CB} = {01560084-35D8-4465-93CC-093F57FDEDDB}
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {2D488BAB-BCC4-474D-99E1-C3F8CA88B321}
+	EndGlobalSection
+EndGlobal
