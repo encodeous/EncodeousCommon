@@ -29,9 +29,10 @@ namespace EncodeousCommon.Miscellaneous.ModalDialog
             Modaldialog = form;
             Brightness = 0;
         }
-        public string DesktopName { get => desktop; set => desktop = value; }
-        public Form Modaldialog { get => modaldialog; set => modaldialog = value; }
-        public int Brightness { get => brightness; set => brightness = value; }
+
+        public string DesktopName;
+        public Form Modaldialog;
+        public int Brightness;
         public void CreateDialog()
         {
             Desktop cdsk = Desktop.DesktopOfCurrentThread();
