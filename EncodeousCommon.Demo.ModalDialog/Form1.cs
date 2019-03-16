@@ -28,10 +28,6 @@ namespace EncodeousCommon.Demo.ModalDialog
         {
             int backgroundBrightness = -50;
             DialogForm modalDialogForm = new DialogForm();
-            if (textBox1.Text != "")
-            {
-                modalDialogForm.label1.Text = textBox1.Text;
-            }
             DialogCreator modalDialogCreator = new DialogCreator("DesktopName",modalDialogForm, backgroundBrightness);
             modalDialogCreator.CreateDialog();
         }
