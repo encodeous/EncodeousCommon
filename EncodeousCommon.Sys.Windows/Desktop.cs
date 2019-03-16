@@ -12,23 +12,17 @@ namespace EncodeousCommon.Sys.Windows
     public class Desktop
     {
         #region Imports
-        [DllImport("kernel32.dll")]
-        private static extern int GetThreadId(IntPtr thread);
 
-        [DllImport("kernel32.dll")]
-        private static extern int GetProcessId(IntPtr process);
-
-        //
-        // Imported winAPI functions.
-        //
         [DllImport("user32.dll")]
-        private static extern IntPtr CreateDesktop(string lpszDesktop, IntPtr lpszDevice, IntPtr pDevmode, int dwFlags, long dwDesiredAccess, IntPtr lpsa);
+        public static extern IntPtr CreateDesktop(string lpszDesktop, IntPtr lpszDevice, IntPtr pDevmode, int dwFlags,
+            int dwDesiredAccess, IntPtr lpsa);
 
         [DllImport("user32.dll")]
         private static extern bool CloseDesktop(IntPtr hDesktop);
 
         [DllImport("user32.dll")]
-        private static extern IntPtr OpenDesktop(string lpszDesktop, int dwFlags, bool fInherit, long dwDesiredAccess);
+        private static extern IntPtr OpenDesktop(string lpszDesktop, uint dwFlags,
+            bool fInherit, uint dwDesiredAccess);
 
         [DllImport("user32.dll")]
         private static extern IntPtr OpenInputDesktop(int dwFlags, bool fInherit, long dwDesiredAccess);
@@ -144,31 +138,18 @@ namespace EncodeousCommon.Sys.Windows
         }
         public static IntPtr CreateDesktopH(string name, DESKTOP_ACCESS desktopAccess)
         {
-            return CreateDesktop(name, IntPtr.Zero, IntPtr.Zero, 0, (uint)desktopAccess, IntPtr.Zero);
+            return CreateDesktop(name, IntPtr.Zero, IntPtr.Zero, 0, (int)desktopAccess, IntPtr.Zero);
         }
         public static Desktop DesktopOfCurrentThread()
         {
-            return new Desktop(GetThreadDesktop((int)ProcessManager.GetCurrentThreadId()));
+            IntPtr v = GetThreadDesktop((int) ProcessManager.GetCurrentThreadId());
+            return new Desktop(v, GetDesktopName(v));
         }
         public static Desktop DesktopOfThread(int threadID)
         {
-            return new Desktop(GetThreadDesktop(threadID));
+            IntPtr v = GetThreadDesktop(threadID);
+            return new Desktop(v,GetDesktopName(v));
             
-        }
-
-        public static Desktop CreateDesktop(string name, DESKTOP_ACCESS desktopAccess)
-        {
-            return new Desktop(CreateDesktop(name, IntPtr.Zero, IntPtr.Zero, 0, (uint)desktopAccess, IntPtr.Zero));
-        }
-
-        public static IntPtr OpenDesktopHandle(string name)
-        {
-            return OpenDesktop(name, 0, true, AccessRights);
-        }
-
-        public static Desktop OpenDesktop(string name)
-        {
-            return new Desktop(OpenDesktop(name, 0, true, AccessRights));
         }
         public static string GetDesktopName(IntPtr desktopHandle)
         {
@@ -179,11 +160,11 @@ namespace EncodeousCommon.Sys.Windows
             // get the length of the name.
             int needed = 0;
             string name = String.Empty;
-            GetUserObjectInformation(desktopHandle, 2, IntPtr.Zero, 0, ref needed);
+            GetUserObjectInformation(desktopHandle, UOI_NAME, IntPtr.Zero, 0, ref needed);
 
             // get the name.
             IntPtr ptr = Marshal.AllocHGlobal(needed);
-            bool result = GetUserObjectInformation(desktopHandle, 2, ptr, needed, ref needed);
+            bool result = GetUserObjectInformation(desktopHandle, UOI_NAME, ptr, needed, ref needed);
             name = Marshal.PtrToStringAnsi(ptr);
             Marshal.FreeHGlobal(ptr);
 
@@ -191,6 +172,20 @@ namespace EncodeousCommon.Sys.Windows
             if (!result) return null;
 
             return name;
+        }
+        public static Desktop CreateDesktop(string name, DESKTOP_ACCESS desktopAccess)
+        {
+            return new Desktop(CreateDesktop(name, IntPtr.Zero, IntPtr.Zero, 0, (int)desktopAccess, IntPtr.Zero), name);
+        }
+
+        public static IntPtr OpenDesktopHandle(string name)
+        {
+            return OpenDesktop(name, 0, true, AccessRights);
+        }
+
+        public static Desktop OpenDesktop(string name)
+        {
+            return new Desktop(OpenDesktop(name, 0, true, AccessRights), name);
         }
 
         #endregion
@@ -205,21 +200,21 @@ namespace EncodeousCommon.Sys.Windows
         private const int UOI_NAME = 2;
         private const int STARTF_USEPOSITION = 0x00000004;
         private const int NORMAL_PRIORITY_CLASS = 0x00000020;
-        private const long DESKTOP_CREATEWINDOW = 0x0002L;
-        private const long DESKTOP_ENUMERATE = 0x0040L;
-        private const long DESKTOP_WRITEOBJECTS = 0x0080L;
-        private const long DESKTOP_SWITCHDESKTOP = 0x0100L;
-        private const long DESKTOP_CREATEMENU = 0x0004L;
-        private const long DESKTOP_HOOKCONTROL = 0x0008L;
-        private const long DESKTOP_READOBJECTS = 0x0001L;
-        private const long DESKTOP_JOURNALRECORD = 0x0010L;
-        private const long DESKTOP_JOURNALPLAYBACK = 0x0020L;
-        private const long AccessRights = DESKTOP_JOURNALRECORD | DESKTOP_JOURNALPLAYBACK | DESKTOP_CREATEWINDOW | DESKTOP_ENUMERATE | DESKTOP_WRITEOBJECTS | DESKTOP_SWITCHDESKTOP | DESKTOP_CREATEMENU | DESKTOP_HOOKCONTROL | DESKTOP_READOBJECTS;
+        private const uint DESKTOP_CREATEWINDOW = 0x0002;
+        private const uint DESKTOP_ENUMERATE = 0x0040;
+        private const uint DESKTOP_WRITEOBJECTS = 0x0080;
+        private const uint DESKTOP_SWITCHDESKTOP = 0x0100;
+        private const uint DESKTOP_CREATEMENU = 0x0004;
+        private const uint DESKTOP_HOOKCONTROL = 0x0008;
+        private const uint DESKTOP_READOBJECTS = 0x0001;
+        private const uint DESKTOP_JOURNALRECORD = 0x0010;
+        private const uint DESKTOP_JOURNALPLAYBACK = 0x0020;
+        private const uint AccessRights = DESKTOP_JOURNALRECORD | DESKTOP_JOURNALPLAYBACK | DESKTOP_CREATEWINDOW | DESKTOP_ENUMERATE | DESKTOP_WRITEOBJECTS | DESKTOP_SWITCHDESKTOP | DESKTOP_CREATEMENU | DESKTOP_HOOKCONTROL | DESKTOP_READOBJECTS;
 
-        public Desktop(IntPtr handle)
+        public Desktop(IntPtr handle, string name)
         {
             Handle = handle;
-            DesktopName = GetDesktopName(handle);
+            DesktopName = name;
         }
 
         public Desktop(string name)

@@ -21,6 +21,7 @@
     <DefineConstants>DEBUG;TRACE</DefineConstants>
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
+    <AllowUnsafeBlocks>true</AllowUnsafeBlocks>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
     <DebugType>pdbonly</DebugType>
@@ -32,9 +33,6 @@
     <AllowUnsafeBlocks>true</AllowUnsafeBlocks>
   </PropertyGroup>
   <ItemGroup>
-    <Reference Include="EncodeousCommon.Sys.Windows">
-      <HintPath>..\EncodeousCommon.Sys.Windows\bin\Release\EncodeousCommon.Sys.Windows.dll</HintPath>
-    </Reference>
     <Reference Include="System" />
     <Reference Include="System.Core" />
     <Reference Include="System.Drawing" />
@@ -60,6 +58,12 @@
     <EmbeddedResource Include="MDBG.resx">
       <DependentUpon>MDBG.cs</DependentUpon>
     </EmbeddedResource>
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\EncodeousCommon.Sys.Windows\EncodeousCommon.Sys.Windows.csproj">
+      <Project>{1C48817C-3C80-4D0D-95BC-FEACB3BA358A}</Project>
+      <Name>EncodeousCommon.Sys.Windows</Name>
+    </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

@@ -15,24 +15,23 @@ namespace EncodeousCommon.Miscellaneous.ModalDialog
     {
         string desktop;
         Form modaldialog;
-        int bgdarkness;
+        int brightness;
         Bitmap screenshot;
-        public DialogCreator(string DesktopName, Form form, int BackgroundDarkness)
+        public DialogCreator(string DesktopName, Form form, int BackgroundBrightness)
         {
             this.DesktopName = DesktopName;
             Modaldialog = form;
-            BGDarkness = BackgroundDarkness;
+            Brightness = BackgroundBrightness;
         }
         public DialogCreator(string DesktopName, Form form)
         {
             this.DesktopName = DesktopName;
             Modaldialog = form;
-            BGDarkness = 0;
+            Brightness = 0;
         }
         public string DesktopName { get => desktop; set => desktop = value; }
         public Form Modaldialog { get => modaldialog; set => modaldialog = value; }
-        public int BGDarkness { get => bgdarkness; set => bgdarkness = value; }
-        public Bitmap Screenshot { get => screenshot; set => screenshot = value; }
+        public int Brightness { get => brightness; set => brightness = value; }
         public void CreateDialog()
         {
             Desktop cdsk = Desktop.DesktopOfCurrentThread();
@@ -46,7 +45,7 @@ namespace EncodeousCommon.Miscellaneous.ModalDialog
             Graphics g = Graphics.FromImage(BM);
             g.CopyFromScreen(rect.Left, rect.Top, 0, 0, rect.Size);
             //Changes the brightness of the bitmap according to the BGDarkness value.
-            screenshot = SetBrightness(new Bitmap(BM), bgdarkness);
+            screenshot = SetBrightness(new Bitmap(BM), Brightness);
             var a = new Task(() =>
             {
                 Desktop.SetCurrentThreadDesktop(dsk.Handle);
@@ -73,7 +72,7 @@ namespace EncodeousCommon.Miscellaneous.ModalDialog
             dsk.Close();
             cdsk.Close();
         }
-        static Bitmap SetBrightness(Bitmap bitmap, int amount)
+        Bitmap SetBrightness(Bitmap bitmap, int amount)
         {
             if (amount < -255 || amount > 255)
                 return bitmap;
