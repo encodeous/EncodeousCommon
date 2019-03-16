@@ -26,5 +26,10 @@ namespace EncodeousCommon.Demo.ModalDialog
         {
             Close();
         }
+
+        private void DialogForm_Load(object sender, EventArgs e)
+        {
+
+        }
     }
 }

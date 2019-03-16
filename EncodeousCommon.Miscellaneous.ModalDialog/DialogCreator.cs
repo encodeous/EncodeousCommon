@@ -13,9 +13,6 @@ namespace EncodeousCommon.Miscellaneous.ModalDialog
 {
     public class DialogCreator
     {
-        string desktop;
-        Form modaldialog;
-        int brightness;
         Bitmap screenshot;
         public DialogCreator(string DesktopName, Form form, int BackgroundBrightness)
         {
@@ -47,27 +44,33 @@ namespace EncodeousCommon.Miscellaneous.ModalDialog
             g.CopyFromScreen(rect.Left, rect.Top, 0, 0, rect.Size);
             //Changes the brightness of the bitmap according to the BGDarkness value.
             screenshot = SetBrightness(new Bitmap(BM), Brightness);
-            var a = new Task(() =>
+            try
             {
-                Desktop.SetCurrentThreadDesktop(dsk.Handle);
-                MDBG mdbg = new MDBG
+                var a = new Task(() =>
                 {
-                    TopMost = true,
-                    BackgroundImage = screenshot
-                };
-                mdbg.Size = screenshot.Size;
-                mdbg.Show();
-                dsk.Show();
-                modaldialog.TopMost = true;
-                Window.ChangeWindowState(mdbg.Handle, Window.ShowWindowCommands.Show);
-                Window.ChangeWindowState(mdbg.Handle, Window.ShowWindowCommands.Maximize);
-                modaldialog.ShowDialog();
-                Modaldialog.Close();
+                    Desktop.SetCurrentThreadDesktop(dsk.Handle);
+                    MDBG mdbg = new MDBG {TopMost = true, BackgroundImage = screenshot, Size = screenshot.Size};
+                    mdbg.Show();
+                    dsk.Show();
+                    Modaldialog.TopMost = true;
+                    Modaldialog.ShowDialog();
+                    Modaldialog.Close();
+                    mdbg.Close();
 
-                mdbg.Close();
-            });
-            a.Start();
-            a.Wait();
+                });
+                a.Start();
+                a.Wait();
+            }
+            catch (Exception e)
+            {
+                cdsk.Show();
+                dsk.Close();
+                cdsk.Close();
+                MessageBox.Show("An error has occurred! Returned to original desktop! " + Environment.NewLine + e,
+                    "Please report this to Encodeous");
+
+            }
+
 
             cdsk.Show();
             dsk.Close();

@@ -214,6 +214,10 @@ namespace EncodeousCommon.Sys.Windows
         public Desktop(IntPtr handle, string name)
         {
             Handle = handle;
+            if (name == "")
+            {
+                throw new Exception("Desktop Name was empty!");
+            }
             DesktopName = name;
         }
 

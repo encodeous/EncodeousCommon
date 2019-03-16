@@ -35,5 +35,9 @@ namespace EncodeousCommon.Demo.ModalDialog
             DialogCreator modalDialogCreator = new DialogCreator("DesktopName",modalDialogForm, backgroundBrightness);
             modalDialogCreator.CreateDialog();
         }
+
+        private void Form1_Load(object sender, EventArgs e)
+        {
+        }
     }
 }
